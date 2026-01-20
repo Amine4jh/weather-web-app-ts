@@ -75,7 +75,7 @@ export function useWeather() {
   // Load default weather
   useEffect(() => {
     fetchWeatherByCity("New York");
-  });
+  }, []);
 
   return {
     currentWeather,

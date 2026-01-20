@@ -25,11 +25,11 @@ export async function getCurrentWeather(city: string) {
         throw new Error(
           `Invalid API Key, please check your OpenWeatherMap API configuration.`,
         );
+      } else {
+        throw new Error(
+          "Weather service is temporary unavailable. Please try again later.",
+        );
       }
-    } else {
-      throw new Error(
-        "Weather service is temporary unavailable. Please try again later.",
-      );
     }
 
     const data = await response.json();
@@ -59,13 +59,12 @@ export async function getCurrentWeatherByCoords(lat: number, lon: number) {
         throw new Error(
           `Invalid API Key, please check your OpenWeatherMap API configuration.`,
         );
+      } else {
+        throw new Error(
+          "Weather service is temporary unavailable. Please try again later.",
+        );
       }
-    } else {
-      throw new Error(
-        "Weather service is temporary unavailable. Please try again later.",
-      );
     }
-
     const data = await response.json();
 
     if (!data.dt) {
@@ -97,11 +96,11 @@ export async function getWeatherForecast(city: string) {
         throw new Error(
           `Invalid API Key, please check your OpenWeatherMap API configuration.`,
         );
+      } else {
+        throw new Error(
+          "Weather service is temporary unavailable. Please try again later.",
+        );
       }
-    } else {
-      throw new Error(
-        "Weather service is temporary unavailable. Please try again later.",
-      );
     }
 
     return await response.json();
@@ -126,11 +125,11 @@ export async function searchCities(query: string) {
         throw new Error(
           `Invalid API Key, please check your OpenWeatherMap API configuration.`,
         );
+      } else {
+        throw new Error(
+          "Weather service is temporary unavailable. Please try again later.",
+        );
       }
-    } else {
-      throw new Error(
-        "Weather service is temporary unavailable. Please try again later.",
-      );
     }
 
     const data = await response.json();

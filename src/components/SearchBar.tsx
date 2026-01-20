@@ -80,7 +80,7 @@ export default function SearchBar({
     <div className="relative w-full max-w-2xl" ref={searchRef}>
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md mb-8 animate-fade-in-up"
+        className="w-full max-w-2xl animate-fade-in-up"
       >
         <div className="relative">
           <input
@@ -124,7 +124,7 @@ export default function SearchBar({
                   </div>
                   <div className="text-sm text-white/60">{city.country}</div>
                 </div>
-                {/* <Search className="w-4 h-4 text-white/40 group-hover:text-white/60 transition-all" /> */}
+                <FiSearch className="w-4 h-4 text-white/40 group-hover:text-white/60 transition-all" />
               </button>
             ))
           )}
