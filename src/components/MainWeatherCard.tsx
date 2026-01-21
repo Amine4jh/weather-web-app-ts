@@ -48,7 +48,8 @@ export default function MainWeatherCard({
         />
         <div className="md:ml-4 text-center md:text-left">
           <p className="text-4xl md:text-6xl font-bold text-white mb-2">
-            {Math.round(weather.main.temp)}°C
+            {Math.round(weather.main.temp)}
+            {unit === "C" ? "°C" : "°F"}
           </p>
           <p className="text-lg md:text-xl text-blue-200 capitalize">
             {weather.weather[0].description}

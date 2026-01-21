@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 interface SunCardProps {
   icon: ReactNode
   iconColor: string
-  time: string
+  time: string | undefined
   type: string
 }
 

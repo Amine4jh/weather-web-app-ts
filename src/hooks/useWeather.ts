@@ -5,8 +5,34 @@ import {
   getWeatherForecast,
 } from "../services/weatherAPI";
 
+interface currentWeather {
+  name: string;
+  main: {
+    temp: number;
+    humidity: number;
+    pressure: number;
+    feels_like: number;
+  };
+  weather: Array<{
+    main: string;
+    description: string;
+    icon: string;
+  }>;
+  wind: {
+    speed: number;
+  };
+  visibility: number;
+  sys: {
+    sunrise: number;
+    sunset: number;
+    country: string;
+  };
+}
+
 export function useWeather() {
-  const [currentWeather, setCurrentWeather] = useState(null);
+  const [currentWeather, setCurrentWeather] = useState<currentWeather | null>(
+    null,
+  );
   const [forecast, setForecast] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
