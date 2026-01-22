@@ -58,7 +58,8 @@ export default function MainWeatherCard({
       </div>
 
       <p className="text-blue-200">
-        Feels like {Math.round(weather.main.feels_like)}°C
+        Feels like {Math.round(weather.main.feels_like)}
+        {unit === "C" ? "°C" : "°F"}
       </p>
     </div>
   );

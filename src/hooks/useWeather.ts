@@ -27,6 +27,7 @@ interface currentWeather {
     sunset: number;
     country: string;
   };
+  timezone: number;
 }
 
 export function useWeather() {

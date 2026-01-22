@@ -1,7 +1,5 @@
-import { useState, type JSX } from "react";
+import { type JSX } from "react";
 import {
-  FiSearch,
-  FiMapPin,
   FiWind,
   FiEye,
   FiSunrise,
@@ -59,35 +57,30 @@ function App() {
 
   const weatherDetailsGridData: {
     icon: JSX.Element;
-    iconColor: string;
     value: number | undefined;
     unit: string;
     title: string;
   }[] = [
     {
-      icon: <WiHumidity size={32} />,
-      iconColor: "blue",
+      icon: <WiHumidity size={32} className="text-blue-400" />,
       value: currentWeather?.main.humidity,
       unit: "%",
       title: "Humidity",
     },
     {
-      icon: <FiWind size={32} />,
-      iconColor: "green",
+      icon: <FiWind size={32} className="text-green-400" />,
       value: currentWeather?.wind.speed,
       unit: " m/s",
       title: "Wind Speed",
     },
     {
-      icon: <WiBarometer size={32} />,
-      iconColor: "purple",
+      icon: <WiBarometer size={32} className="text-purple-400" />,
       value: currentWeather?.main.pressure,
       unit: " hPa",
       title: "Pressure",
     },
     {
-      icon: <FiEye size={32} />,
-      iconColor: "yellow",
+      icon: <FiEye size={32} className="text-yellow-400" />,
       value: currentWeather?.visibility,
       unit: " km",
       title: "Visibility",
@@ -96,20 +89,20 @@ function App() {
 
   const sunDetailsGridData: {
     icon: JSX.Element;
-    iconColor: string;
     time: number | undefined;
+    timezone: number | undefined;
     type: string;
   }[] = [
     {
-      icon: <FiSunrise size={32} />,
-      iconColor: "orange-400",
+      icon: <FiSunrise size={32} className="text-orange-400" />,
       time: currentWeather?.sys.sunrise,
+      timezone: currentWeather?.timezone,
       type: "Sunrise",
     },
     {
-      icon: <FiSunset size={32} />,
-      iconColor: "pink-400",
+      icon: <FiSunset size={32} className="text-pink-400" />,
       time: currentWeather?.sys.sunset,
+      timezone: currentWeather?.timezone,
       type: "Sunset",
     },
   ];
@@ -122,12 +115,20 @@ function App() {
     }
   };
 
-  const formatTime = (timestamp: number | undefined) => {
-    if (timestamp)
-      return new Date(timestamp * 1000).toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+  const formatTime = (
+    timestamp: number | undefined,
+    timezoneOffset: number | undefined,
+  ) => {
+    if (timestamp && timezoneOffset) {
+      return new Date((timestamp + timezoneOffset) * 1000).toLocaleTimeString(
+        [],
+        {
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZone: "UTC",
+        },
+      );
+    }
   };
 
   // const [city, setCity] = useState('');
@@ -214,7 +215,7 @@ function App() {
           )}
 
           {/* Weather Display */}
-          {currentWeather && !loading && (
+          {currentWeather && !loading && !error && (
             <div className="w-full max-w-4xl animate-fade-in-up">
               {/* Main Weather Card */}
               <MainWeatherCard weather={currentWeather} unit={unit} />
@@ -226,7 +227,6 @@ function App() {
                     <GridCard
                       key={index}
                       icon={card.icon}
-                      iconColor={card.iconColor}
                       value={
                         card.title === "Visibility" &&
                         typeof card.value === "number"
@@ -246,8 +246,7 @@ function App() {
                     <SunCard
                       key={index}
                       icon={card.icon}
-                      iconColor={card.iconColor}
-                      time={formatTime(card.time)}
+                      time={formatTime(card.time, card.timezone)}
                       type={card.type}
                     />
                   ))}
