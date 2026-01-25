@@ -6,7 +6,7 @@
 
 A modern, beautiful weather web application built with **React**, **TypeScript**, and **Tailwind CSS** featuring a video background and glassmorphism design and provided data using the OpenWeather API.
 
-<a href="https://weather-app-rho-one-43.vercel.app/" target="_blank"><strong>➥ Live Demo</strong></a>
+<a href="https://weather-app-project-psi-two.vercel.app/" target="_blank"><strong>➥ Live Demo</strong></a>
 
 </div>
 
