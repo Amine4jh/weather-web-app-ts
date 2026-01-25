@@ -23,7 +23,7 @@ function App() {
     unit,
     fetchWeatherByCity,
     fetchWeatherByLocation,
-    toggleUnit,
+    // toggleUnit,
   } = useWeather();
 
   const weatherDetailsGridData: {

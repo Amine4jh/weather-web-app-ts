@@ -114,7 +114,7 @@ export function useWeather() {
           setLoading(false);
         }
       },
-      (error) => {
+      () => {
         setError("Unable to retrieve your location");
         setLoading(false);
       },

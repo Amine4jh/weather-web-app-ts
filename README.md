@@ -6,7 +6,7 @@
 
 A modern, beautiful weather web application built with **React**, **TypeScript**, and **Tailwind CSS** featuring a video background and glassmorphism design and provided data using the OpenWeather API.
 
-<a href="https://github-user-search-project-ten.vercel.app/"><strong>➥ Live Demo</strong></a>
+<a href="https://github-user-search-project-ten.vercel.app/" target="_blank"><strong>➥ Live Demo</strong></a>
 
 </div>
 
