@@ -2,6 +2,7 @@ import { FiMapPin } from "react-icons/fi";
 
 interface MainWeatherCardProps {
   weather: {
+    dt: number;
     name: string;
     main: {
       temp: number;
@@ -23,6 +24,7 @@ interface MainWeatherCardProps {
       sunset: number;
       country: string;
     };
+    timezone: number;
   };
   unit: string;
 }
@@ -31,13 +33,35 @@ export default function MainWeatherCard({
   weather,
   unit,
 }: MainWeatherCardProps) {
+  const handleDate = (dt: number, timezoneOffset: number) => {
+    const date = new Date((dt + timezoneOffset) * 1000);
+    return date.toLocaleDateString([], {
+      weekday: "long",
+      day: "numeric",
+      month: "short",
+      timeZone: "UTC",
+    });
+  };
+
+  const handleTime = (dt: number, timezoneOffset: number) => {
+    return new Date((dt + timezoneOffset) * 1000).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "UTC",
+    });
+  };
+
   return (
     <div className="glass-card p-4 md:p-8 mb-6 text-center rounded-xl">
-      <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center">
         <FiMapPin className="w-6 h-6 text-blue-400 mr-2" />
         <h2 className="text-2xl font-bold text-white">
           {weather.name}, {weather.sys.country}
         </h2>
+      </div>
+      <div className="flex items-center justify-center gap-5 mt-2 mb-4 text-sm font-semibold text-blue-200/80">
+        <p>{handleDate(weather.dt, weather.timezone)}</p>
+        <p>{handleTime(weather.dt, weather.timezone)}</p>
       </div>
 
       <div className="flex flex-col md:flex-row items-center justify-center mb-6">

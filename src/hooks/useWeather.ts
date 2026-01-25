@@ -6,6 +6,7 @@ import {
 } from "../services/weatherAPI";
 
 interface currentWeather {
+  dt: number;
   name: string;
   main: {
     temp: number;
@@ -30,14 +31,38 @@ interface currentWeather {
   timezone: number;
 }
 
+interface forecastItem {
+  dt: number;
+  dt_txt: string;
+  main: {
+    temp: number;
+  };
+  weather: {
+    description: string;
+    icon: string;
+  }[];
+}
+
+interface forecastData {
+  list: forecastItem[];
+}
+
 export function useWeather() {
   const [currentWeather, setCurrentWeather] = useState<currentWeather | null>(
     null,
   );
-  const [forecast, setForecast] = useState(null);
+  const [forecast, setForecast] = useState<forecastItem[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [unit, setUnit] = useState("C");
+
+  // instead of 5-day / 3hours => 5-day / 24hours
+  const handleForcast = (data: forecastData) => {
+    const dailyData = data.list.filter((reading: forecastItem) =>
+      reading.dt_txt.includes("12:00:00"),
+    );
+    return dailyData;
+  };
 
   async function fetchWeatherByCity(city: string) {
     setLoading(true);
@@ -49,7 +74,8 @@ export function useWeather() {
         getWeatherForecast(city),
       ]);
       setCurrentWeather(weatherData);
-      setForecast(foreCast);
+      const dailyData = handleForcast(foreCast);
+      setForecast(dailyData);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to fetch weather data",
@@ -78,7 +104,8 @@ export function useWeather() {
           setCurrentWeather(weatherData);
 
           const forecastData = await getWeatherForecast(weatherData.name);
-          setForecast(forecastData);
+          const dailyData = handleForcast(forecastData);
+          setForecast(dailyData);
         } catch (err) {
           setError(
             err instanceof Error ? err.message : "Failed to fetch weather data",
@@ -88,7 +115,6 @@ export function useWeather() {
         }
       },
       (error) => {
-        console.log("Error because:", error);
         setError("Unable to retrieve your location");
         setLoading(false);
       },

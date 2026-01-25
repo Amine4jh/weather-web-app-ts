@@ -1,14 +1,8 @@
 import { type JSX } from "react";
-import {
-  FiWind,
-  FiEye,
-  FiSunrise,
-  FiSunset,
-} from "react-icons/fi";
+import { FiWind, FiEye, FiSunrise, FiSunset } from "react-icons/fi";
 import { WiHumidity, WiBarometer } from "react-icons/wi";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import bg from "./assets/bg.webp";
 import LoadingState from "./components/LoadingState";
 import ErrorState from "./components/ErrorState";
 import GridCard from "./components/GridCard";
@@ -16,32 +10,9 @@ import SunCard from "./components/SunCard";
 import DefaultState from "./components/DefaultState";
 import { useWeather } from "./hooks/useWeather";
 import SearchBar from "./components/SearchBar";
-import TemperatureToggle from "./components/TemperatureToggle";
 import MainWeatherCard from "./components/MainWeatherCard";
-
-// interface WeatherData {
-//   name: string;
-//   main: {
-//     temp: number;
-//     humidity: number;
-//     pressure: number;
-//     feels_like: number;
-//   };
-//   currentWeather: Array<{
-//     main: string;
-//     description: string;
-//     icon: string;
-//   }>;
-//   wind: {
-//     speed: number;
-//   };
-//   visibility: number;
-//   sys: {
-//     sunrise: number;
-//     sunset: number;
-//     country: string;
-//   };
-// }
+import video from "./assets/bg-video.webm";
+import DayForecastCard from "./components/DayForecastCard";
 
 function App() {
   const {
@@ -62,25 +33,25 @@ function App() {
     title: string;
   }[] = [
     {
-      icon: <WiHumidity size={32} className="text-blue-400" />,
+      icon: <WiHumidity size={32} />,
       value: currentWeather?.main.humidity,
       unit: "%",
       title: "Humidity",
     },
     {
-      icon: <FiWind size={32} className="text-green-400" />,
+      icon: <FiWind size={32} />,
       value: currentWeather?.wind.speed,
       unit: " m/s",
       title: "Wind Speed",
     },
     {
-      icon: <WiBarometer size={32} className="text-purple-400" />,
+      icon: <WiBarometer size={32} />,
       value: currentWeather?.main.pressure,
       unit: " hPa",
       title: "Pressure",
     },
     {
-      icon: <FiEye size={32} className="text-yellow-400" />,
+      icon: <FiEye size={32} />,
       value: currentWeather?.visibility,
       unit: " km",
       title: "Visibility",
@@ -94,13 +65,13 @@ function App() {
     type: string;
   }[] = [
     {
-      icon: <FiSunrise size={32} className="text-orange-400" />,
+      icon: <FiSunrise size={32} />,
       time: currentWeather?.sys.sunrise,
       timezone: currentWeather?.timezone,
       type: "Sunrise",
     },
     {
-      icon: <FiSunset size={32} className="text-pink-400" />,
+      icon: <FiSunset size={32} />,
       time: currentWeather?.sys.sunset,
       timezone: currentWeather?.timezone,
       type: "Sunset",
@@ -131,61 +102,33 @@ function App() {
     }
   };
 
-  // const [city, setCity] = useState('');
-  // const [weather, setWeather] = useState<WeatherData | null>(null);
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState('');
-
-  // const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-  // const BASE_URL = import.meta.env.VITE_WEATHER_BASE_URL;
-
-  // const fetchWeather = async (cityName: string) => {
-  //   if (!cityName.trim()) return;
-
-  //   setLoading(true);
-  //   setError('');
-
-  //   try {
-  //     const response = await fetch(
-  //       `${BASE_URL}?lat=35.570175&lon=-5.3742776&appid=${API_KEY}&units=metric`
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error('City not found');
-  //     }
-
-  //     const data: WeatherData = await response.json();
-  //     setWeather(data);
-  //   } catch (err) {
-  //     setError(err instanceof Error ? err.message : 'Failed to fetch weather data');
-  //     setWeather(null);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const handleSearch = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   fetchWeather(city);
-  // };
+  const handleDays = (date: string) => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const apiDate = new Date(date.replace(" ", "T")).toDateString();
+    if (apiDate === today.toDateString()) {
+      return "Today";
+    } else if (apiDate === tomorrow.toDateString()) {
+      return "Tomorrow";
+    } else {
+      return apiDate.split(" ")[0];
+    }
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden">
+      {/* If the video not working */}
+      <div className="absolute inset-0 bg-linear-to-br from-blue-900 via-purple-900 to-indigo-900"></div>
       {/* Video Background */}
-
-      {/* <video
+      <video
         autoPlay
         loop
         muted
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        className="fixed top-0 left-0 w-full h-full object-cover z-0"
       >
         <source src={video} type="video/mp4" />
-        <div className="absolute inset-0 bg-linear-to-br from-blue-900 via-purple-900 to-indigo-900"></div>
-      </video> */}
-
-      <div className="absolute top-0 left-0 w-full h-full z-0">
-        <img src={bg} alt="" className="w-full h-full object-cover" />
-      </div>
+      </video>
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/30 z-10"></div>
@@ -203,7 +146,7 @@ function App() {
               onLocationSearch={fetchWeatherByLocation}
               loading={loading}
             />
-            <TemperatureToggle unit={unit} onToggle={toggleUnit} />
+            {/* <TemperatureToggle unit={unit} onToggle={toggleUnit} /> */}
           </div>
 
           {/* Loading State */}
@@ -216,10 +159,50 @@ function App() {
 
           {/* Weather Display */}
           {currentWeather && !loading && !error && (
-            <div className="w-full max-w-4xl animate-fade-in-up">
-              {/* Main Weather Card */}
-              <MainWeatherCard weather={currentWeather} unit={unit} />
+            <div className="w-full max-w-7xl animate-fade-in-up">
+              <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                {/* Main Weather Content */}
+                <div className="flex-1 max-w-4xl">
+                  {/* Main Weather Card */}
+                  <MainWeatherCard weather={currentWeather} unit={unit} />
 
+                  {/* Sunrise/Sunset */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mt-5">
+                    {sunDetailsGridData &&
+                      sunDetailsGridData.map((card, index) => (
+                        <SunCard
+                          key={index}
+                          icon={card.icon}
+                          time={formatTime(card.time, card.timezone)}
+                          type={card.type}
+                        />
+                      ))}
+                  </div>
+                </div>
+
+                {/* 5-Day Forecast Sidebar */}
+                <div className="w-full lg:w-80 xl:w-96">
+                  <div className="glass-card p-4 md:p-6 rounded-xl">
+                    <h3 className="text-xl font-bold text-white mb-4 text-center">
+                      5-Day Forecast
+                    </h3>
+
+                    <div className="space-y-3">
+                      {forecast &&
+                        forecast.map((day, index) => (
+                          <DayForecastCard
+                            key={index}
+                            // day={new Date().toLocaleDateString(undefined, {weekday: 'long'})}
+                            day={handleDays(day.dt_txt)}
+                            icon={day.weather[0].icon}
+                            description={day.weather[0].description}
+                            temp={Math.round(day.main.temp)}
+                          />
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
               {/* Weather Details Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 my-6 md:my-8">
                 {weatherDetailsGridData &&
@@ -238,27 +221,12 @@ function App() {
                     />
                   ))}
               </div>
-
-              {/* Sunrise/Sunset */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                {sunDetailsGridData &&
-                  sunDetailsGridData.map((card, index) => (
-                    <SunCard
-                      key={index}
-                      icon={card.icon}
-                      time={formatTime(card.time, card.timezone)}
-                      type={card.type}
-                    />
-                  ))}
-              </div>
             </div>
           )}
-
           {/* Default State */}
           {!currentWeather && !loading && !error && <DefaultState />}
         </main>
 
-        {/* Footer */}
         <Footer />
       </div>
     </div>
