@@ -4,8 +4,6 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-A responsive web application built with **React** and **Tailwind CSS** that allows users to search for GitHub profiles and view their details using the GitHub API.
-
 A modern, beautiful weather web application built with **React**, **TypeScript**, and **Tailwind CSS** featuring a video background and glassmorphism design and provided data using the OpenWeather API.
 
 <a href="https://github-user-search-project-ten.vercel.app/"><strong>➥ Live Demo</strong></a>
