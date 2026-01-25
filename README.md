@@ -1,8 +1,26 @@
-# Weather App 🌤️
+<div align="center">
+<h1 align="center">🌤️ Weather App</h1>
 
-A modern, beautiful weather web application built with React, TypeScript, and Tailwind CSS featuring a video background and glassmorphism design.
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-## Features
+A responsive web application built with **React** and **Tailwind CSS** that allows users to search for GitHub profiles and view their details using the GitHub API.
+
+A modern, beautiful weather web application built with **React**, **TypeScript**, and **Tailwind CSS** featuring a video background and glassmorphism design and provided data using the OpenWeather API.
+
+<a href="https://github-user-search-project-ten.vercel.app/"><strong>➥ Live Demo</strong></a>
+
+</div>
+
+<br />
+
+### Demo Screeshot
+
+![Weather App Demo](public/demoImage.webp)
+
+---
+
+## ✨ Features
 
 - 🎨 Modern glassmorphism design with video background
 - 🌟 Smooth animations and transitions
@@ -13,37 +31,9 @@ A modern, beautiful weather web application built with React, TypeScript, and Ta
 - 💨 Wind speed, humidity, pressure, and visibility
 - ⚡ Fast and lightweight
 
-## Setup
+## 🛠️ Technologies Used
 
-1. **Clone the repository** (if not already done)
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Get a free API key from [OpenWeatherMap](https://openweathermap.org/api):**
-   - Sign up for a free account
-   - Go to API keys section
-   - Copy your API key
-
-4. **Add your API key:**
-   - Open `src/App.tsx`
-   - Replace `YOUR_API_KEY_HERE` with your actual API key:
-   ```typescript
-   const API_KEY = 'your_actual_api_key_here';
-   ```
-
-5. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
-
-6. **Open your browser** and navigate to `http://localhost:5173`
-
-## Technologies Used
-
-- **React 19** - Modern React with hooks
+- **React** - Modern React with hooks
 - **TypeScript** - Type-safe JavaScript
 - **Tailwind CSS** - Utility-first CSS framework
 - **Vite** - Fast build tool
@@ -58,17 +48,68 @@ A modern, beautiful weather web application built with React, TypeScript, and Ta
 - **Responsive**: Works perfectly on all device sizes
 - **Accessibility**: Proper contrast and semantic HTML
 
-## API Usage
+---
 
-This app uses the OpenWeatherMap Current Weather API with the following endpoint:
-```
-https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric
-```
+## 🚀 Getting Started
 
-## Contributing
+Follow these steps to run the project locally on your machine.
 
-Feel free to submit issues and enhancement requests!
+### Prerequisites
 
-## License
+- Node.js
+- npm or yarn
 
-This project is open source and available under the [MIT License](LICENSE).
+### Installation
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/Amine4jh/weather-web-app-ts.git
+    cd weather-web-app-ts
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+3.  **Run the development server:**
+
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    ```
+
+4.  Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
+
+---
+
+## ⚙️ Configuration
+
+1.  Create a `.env` file in the root directory.
+2.  Add your OpenWeather Token:
+    ```env
+    VITE_WEATHER_API_KEY=your_token_here
+    VITE_WEATHER_BASE_URL=https://api.openweathermap.org/data/2.5/
+    VITE_GEO_BASE_URL=http://api.openweathermap.org/geo/1.0/
+    ```
+
+---
+
+## 👤 Author
+
+**Amine Ajaha**
+
+GitHub: @Amine4jh
+
+LinkedIn: [Amine Ajaha](https://www.linkedin.com/in/amineajaha/)
+
+---
+
+## 📄 License
+
+This project is open source and available under the MIT License.
